@@ -1,0 +1,4 @@
+dependencies {
+	compile ('javax.ws.rs:javax.ws.rs-api:2.0.+')
+	compile ('javax.xml:jaxb-api:2.1')	 
+}

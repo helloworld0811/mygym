@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        mavenCentral() 
+        
+    }
+    dependencies {
+        //classpath group: 'com.mls.build', name: 'mls-build', version: '0.2.37'
+    }
+}
+
+
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.11'
+	distributionUrl = "http://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+
+subprojects {
+	apply plugin: 'java'
+        apply plugin: 'eclipse'
+        apply plugin: 'idea'
+	compileJava.options.encoding = 'UTF-8'
+	compileTestJava.options.encoding = 'UTF-8'
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+	//project.version = scmVersion.version
+	
+	//findbugsMain.enabled = true
+	//findbugs.ignoreFailures = true
+	//pmdMain.enabled = true
+	//pmd.ignoreFailures = true
+	//checkstyleMain.enabled = false
+	//checkstyle.ignoreFailures = true
+	
+	configurations.all {
+	  resolutionStrategy.cacheDynamicVersionsFor 30, 'minutes'
+	  resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+	}
+	
+	eclipse {
+  		classpath {
+  			containers = ['org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7']
+		}
+	}
+
+    dependencies {
+     
+        testCompile("org.mockito:mockito-all:1.9.5")
+    }
+
+    test {
+        useJUnit {
+           // includeCategories 'com.gymbuddy.common.test.categories.UnitTest'
+        }
+    }
+
+}
+
+println "------------------------------------------"
+println "Project name:    ${name}"
+//println "Project version: ${scmVersion.version}"
+println "Gradle version:  ${gradle.gradleVersion}"
+println "------------------------------------------"

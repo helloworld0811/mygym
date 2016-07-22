@@ -1,0 +1,13 @@
+rootProject.name = 'gymbuddy'
+
+include 'api/services/webservices/gymbuddy/v01'
+rootProject.children.find { it.name == 'api/services/webservices/gymbuddy/v01' }.name = 'api-services-webservices-gymbuddy-v01'
+
+include 'services/webservices/gymbuddy/v01'
+rootProject.children.find { it.name == 'services/webservices/gymbuddy/v01' }.name = 'services-webservices-gymbuddy-v01'
+
+include 'packages/war-tomcat7-gymbuddy'
+rootProject.children.find { it.name == 'packages/war-tomcat7-gymbuddy' }.name = 'packages-war-tomcat7-gymbuddy'
+
+include 'packages/jar-springboot-gymbuddy'
+rootProject.children.find { it.name == 'packages/jar-springboot-gymbuddy' }.name = 'packages-jar-springboot-gymbuddy'

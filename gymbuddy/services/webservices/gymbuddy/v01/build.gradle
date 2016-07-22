@@ -1,0 +1,63 @@
+test {
+   // explicitly include or exclude tests
+  //include 'org/foo/**'
+  //exclude 'org/boo/**'
+  //exclude 'org/boo/**'
+}
+
+dependencies {
+	compile project(':api-services-webservices-gymbuddy-v01')
+	//compile project(':services-webservices-common')
+	//compile project(':common')
+
+	compile('commons-lang:commons-lang:2.3')
+	compile('commons-io:commons-io:2.4')
+	compile('org.codehaus.jackson:jackson-all:'+libJacksonVersion)
+	compile('com.google.code.gson:gson:'+libGsonVersion) {exclude group: '*' }
+	
+
+	// hard requirements
+	compile ('org.springframework.security:spring-security-core:'+libSpringSecurityVersion) { exclude group: 'commons-logging' }
+	compile ('org.springframework.security:spring-security-config:'+libSpringSecurityVersion) { exclude group: 'commons-logging' }
+	compile ('org.apache.cxf:cxf-rt-ws-security:'+libCxfVersion) {exclude group: 'commons-logging' exclude group: 'org.slf4j'}
+	compile ('javax.servlet:javax.servlet-api:3.1.0')
+
+	/**
+	  all the logging stuff 
+	  **/    
+	compile 	('org.slf4j:slf4j-api:'+libSlf4jVersion)
+	testCompile ('org.slf4j:slf4j-simple:'+libSlf4jVersion)
+	//testCompile ('org.apache.logging.log4j:log4j-slf4j-impl:2.2')
+	//testCompile ('org.apache.logging.log4j:log4j-bom:2.2')
+	//runtime 'org.slf4j:jcl-over-slf4j:1.6.2'
+	//runtime 'org.slf4j:jul-to-slf4j:1.6.2'
+	//runtime 'ch.qos.logback:logback-classic:1.0.3'
+	//runtime 'ch.qos.logback:logback-core:1.0.3'
+	//runtime 'log4j:log4j:1.2.15-ssl-patch'
+	runtime 'commons-logging:commons-logging:1.1.0.jboss'
+
+	testCompile ('org.apache.cxf:cxf-rt-transports-http-jetty:'+libCxfVersion) {exclude group: 'commons-logging' exclude group: 'org.slf4j'}
+	testCompile ('org.apache.commons:commons-lang3:3.3.2') 				{exclude group: 'commons-logging' exclude group: 'org.slf4j'}
+	testCompile ('junit:junit:4.+') 									{exclude group: 'commons-logging' exclude group: 'org.slf4j'}
+    //testCompile ('org.springframework:spring-test:4.0.7.RELEASE')  {exclude group: 'commons-logging' exclude group: 'org.slf4j'}
+
+	/**
+	 mocking stuff
+	 **/ 
+	testCompile ('org.powermock:powermock-module-junit4:1.6.1') {exclude group: 'org.javassist'}
+	testCompile ('org.powermock:powermock-api-easymock:1.6.1') {exclude group: 'org.javassist'}
+	//testCompile ('org.powermock:powermock-api-mockito:1.6.1') {exclude group: 'org.javassist'}
+	testCompile ('org.easymock:easymock:3.2') {exclude group: 'org.javassist'}
+	//testCompile ('org.mockito:mockito-all:1.10.8') {exclude group: 'org.javassist'}
+	
+	/**
+	 generate test objects
+	 **/
+	testCompile group: "uk.co.jemos.podam", name: "podam", version: "4.1.0.RELEASE"
+}
+
+task systemIntegrationTest(type: Test) {
+	useJUnit {
+		includeCategories 'com.mls.common.test.categories.SystemIntegrationTest'
+	}
+}
